@@ -2,22 +2,11 @@ FROM centos:7
 
 MAINTAINER karthikchary
 
-RUN yum -y update && \
+RUN yum update -y && \
 
-yum -y install httpd && \
+yum install httpd -y && \
 
 yum clean all
 
-COPY data/httpd.conf /etc/httpd/conf/httpd.conf
+ENTRYPOINT ["/usr/sbin/httpd", "-D", "FOREGROUND"]
 
-ADD data/html.tar.gz /var/www/html/
-
-EXPOSE 80
-
-ENV HOME /root
-
-WORKDIR /root
-
-ENTRYPOINT ["ping"]
-
-CMD ["google.com"]
